@@ -130,14 +130,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 FIREBASE_PATH = os.path.join(BASE_DIR, 'project/keyfile.json')
 
-AUTH_USER_MODEL = 'user_api.CustomUser'
+AUTH_USER_MODEL = 'firebase_authentication.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'firebase_authentication.authentication.FirebaseAuthentication',
+        'firebase_authentication.authentication.FirebaseAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
