@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "rest_framework", # 추가
     "rest_framework_simplejwt", # 추가
     "firebase_authentication", # 추가
+    'community', # 추가
 ]
 
 MIDDLEWARE = [
@@ -137,7 +138,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'firebase_authentication.authentication.FirebaseAuthentication',
+        # 'firebase_authentication.authentication.FirebaseAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
