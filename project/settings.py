@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt", # 추가
     "firebase_authentication", # 추가
     'community', # 추가
+    'map', # 추가
 ]
 
 MIDDLEWARE = [
