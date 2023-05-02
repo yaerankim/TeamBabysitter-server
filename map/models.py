@@ -17,6 +17,8 @@ class Place(models.Model):
         db_table = 'places'
 
 class PlaceBabyInfo(models.Model):
+    # Place OneToOne 관계로 설정. Place 1: PlaceBabyInfo 1
+    place = models.OneToOneField(Place)
     # 정보 취득이 안 된 경우를 생각하여 null을 허용하므로 NullBooleanField 사용
     ramp = models.NullBooleanField(default=False)
     baby_dish = models.NullBooleanField(default=False)
@@ -38,6 +40,11 @@ class Review(models.Model):
     #             related_name = 'users',
     #             on_delete    = models.CASCADE,
     #         )
+
+    # 1(Place):N(Review)
+    # Place를 FK로 설정
+    place = models.ForeignKey(Place, on_delete=models.CASCADE)
+    # 각각 기본적인 필드 정의.
     status  = models.CharField(
                 verbose_name = 'status',
                 choices      = POST_STATUSES,
