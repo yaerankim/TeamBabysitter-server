@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from user_api.views import register
-from community.views import CommunityCreate, CommunityDetail, CommunityList
+from community.views import CommunityCreate, CommunityDetail, CommunityList, CommentCreate, CommentDetail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,6 +24,8 @@ urlpatterns = [
     path('community/create/', CommunityCreate.as_view(), name='community-create'),
     path('community/<int:pk>', CommunityDetail.as_view(), name='community-detail'),
     path('community/', CommunityList.as_view(), name='community-list'),
+    path('comment/create/<int:pk>', CommentCreate.as_view(), name='comment-create'),
+    path('comment/<int:pk>', CommentDetail.as_view(), name='comment-detail'),
     # path('login/', login, name='login'),
     # path('login/', AuthAPIView.as_view()),
     # path('list/', ListUsers.as_view()),

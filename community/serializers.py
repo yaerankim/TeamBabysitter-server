@@ -20,8 +20,8 @@ class CommunityListSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'created_at', 'view_count', 'comments_count']
 
     def get_comments_count(self, obj):
-        # post_id -> view에서 comment 등록 관련해서 사용되는 필드
-        comments = Comment.objects.filter(post_id=obj.id)
+        # community_id -> view에서 comment 등록 관련해서 사용되는 필드
+        comments = Comment.objects.filter(community_id=obj.id)
         comments_count = {
                 'comments_count':len(comments)
         }
@@ -37,7 +37,7 @@ class CommunityDetailSerializer(serializers.ModelSerializer):
                     'content':comment.content,
                     'created_at':comment.created_at,
                     'updated_at':comment.updated_at,
-                } for comment in Comment.objects.filter(post_id=obj.id)]
+                } for comment in Comment.objects.filter(community_id=obj.id)]
         return comments
 
     class Meta:
