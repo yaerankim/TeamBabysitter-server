@@ -18,14 +18,14 @@ class Place(models.Model):
 
 class PlaceBabyInfo(models.Model):
     # Place OneToOne 관계로 설정. Place 1: PlaceBabyInfo 1
-    place = models.OneToOneField(Place)
+    place = models.OneToOneField(Place, on_delete=models.CASCADE) # on_delete 추가
     # 정보 취득이 안 된 경우를 생각하여 null을 허용하므로 NullBooleanField 사용
-    ramp = models.NullBooleanField(default=False)
-    baby_dish = models.NullBooleanField(default=False)
-    baby_chair = models.NullBooleanField(default=False)
-    nursing_room = models.NullBooleanField(default=False)
-    kids_room = models.NullBooleanField(default=False)
-    auto_door = models.NullBooleanField(default=False)
+    ramp = models.BooleanField(null=True) # 다 BooleanField(null=True)로 수정
+    baby_dish = models.BooleanField(null=True)
+    baby_chair = models.BooleanField(null=True)
+    nursing_room = models.BooleanField(null=True)
+    kids_room = models.BooleanField(null=True)
+    auto_door = models.BooleanField(null=True)
 
 # community 모델 대부분 참고
 class Review(models.Model):
