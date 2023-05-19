@@ -20,6 +20,7 @@ class CommunityCreate(generics.CreateAPIView):
                     title = request.data['title'],
                     content = request.data['content'],
                     view_count = 0,
+                    # row_count = Community.objects.all().count(),
             )
         
             return Response(serializer.data, status=status.HTTP_200_OK)

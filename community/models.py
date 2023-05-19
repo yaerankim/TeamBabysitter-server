@@ -39,6 +39,11 @@ class Community(models.Model):
 				verbose_name = 'updated at',
 				auto_now     = True
 			)
+	# front에서 게시물 전체 list 개수 다 보여주고자 할 때 필요해서 추가 정의
+	row_count = models.IntegerField(
+				verbose_name = 'row count',
+				default      = 0, 
+			)
 
 	class Meta:
 		db_table = 'communities'

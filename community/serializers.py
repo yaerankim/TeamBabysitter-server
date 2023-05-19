@@ -14,10 +14,11 @@ class CommunityCreateSerializer(serializers.ModelSerializer):
 class CommunityListSerializer(serializers.ModelSerializer):
     # writer = serializers.ReadOnlyField(source='user.nickname')
     comments_count = serializers.SerializerMethodField()
+    row_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Community
-        fields = ['id', 'title', 'created_at', 'view_count', 'comments_count']
+        fields = ['id', 'title', 'created_at', 'view_count', 'comments_count', 'row_count'] # , 'row_count'
 
     def get_comments_count(self, obj):
         # community_id -> view에서 comment 등록 관련해서 사용되는 필드
@@ -27,9 +28,15 @@ class CommunityListSerializer(serializers.ModelSerializer):
         }
         return comments_count
 
+    def get_row_count(self, obj):
+        community = Community.objects.all()
+        row_count = len(community)
+        return row_count
+
 class CommunityDetailSerializer(serializers.ModelSerializer):
     # writer = serializers.ReadOnlyField(source='user.nickname')
     comments = serializers.SerializerMethodField()
+    row_count = serializers.SerializerMethodField()
 
     def get_comments(self, obj):
         comments = [{
@@ -40,10 +47,15 @@ class CommunityDetailSerializer(serializers.ModelSerializer):
                 } for comment in Comment.objects.filter(community_id=obj.id)]
         return comments
 
+    def get_row_count(self, obj):
+        community = Community.objects.all()
+        row_count = len(community)
+        return row_count
+
     class Meta:
         model = Community
         # fields = ['id', 'title', 'writer', 'content', 'view_count', 'updated_at', 'comments']
-        fields = ['id', 'title', 'content', 'view_count', 'updated_at', 'comments']
+        fields = ['id', 'title', 'content', 'view_count', 'updated_at', 'comments', 'row_count']
 
 class CommentSerializer(serializers.ModelSerializer):
     # writer = serializers.ReadOnlyField(source='user.nickname')
