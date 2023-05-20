@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     "user_api", # 추가
     "rest_framework", # 추가
     "rest_framework_simplejwt", # 추가
-    "firebase_authentication", # 추가
+    # "firebase_authentication", # 추가
     'community', # 추가
     'map', # 추가
 ]
@@ -132,7 +132,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 FIREBASE_PATH = os.path.join(BASE_DIR, 'project/keyfile.json')
 
-AUTH_USER_MODEL = 'firebase_authentication.User'
+AUTH_USER_MODEL = 'user_api.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (

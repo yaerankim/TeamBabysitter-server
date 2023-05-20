@@ -15,12 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from user_api.views import register
+from user_api.views import RegisterAPIView, AuthAPIView
 from community.views import CommunityCreate, CommunityDetail, CommunityList, CommentCreate, CommentDetail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/register/', register, name='register'),
+    path("user/register/", RegisterAPIView.as_view()),
+    path("user/login/", AuthAPIView.as_view()),
+    # path("user/auth/refresh/", TokenRefreshView.as_view()),
     path('community/create/', CommunityCreate.as_view(), name='community-create'),
     path('community/<int:pk>', CommunityDetail.as_view(), name='community-detail'),
     path('community/', CommunityList.as_view(), name='community-list'),
