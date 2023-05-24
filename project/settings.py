@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders', # 추가
     "user_api", # 추가
     "rest_framework", # 추가
     "rest_framework_simplejwt", # 추가
@@ -56,7 +57,23 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'firebase_authentication.authentication.FirebaseAuthMiddleware',
+    'corsheaders.middleware.CorsMiddleware', # 추가
 ]
+
+# 500 error 발생
+# CORS_ORIGIN_ALLOW_ALL = False # 지정한 도메인만 허용
+
+# CORS_ORIGIN_WHITELIST = [
+#     "https://127.0.0.1:8000", # 허용할 도메인 추가
+# ]
+
+# CORS_ALLOW_METHODS = [
+#     'GET',  # 허용할 HTTP 메서드 추가
+#     'POST',
+#     'PUT',
+#     'PATCH',
+#     'DELETE',
+# ]
 
 ROOT_URLCONF = 'project.urls'
 
@@ -162,7 +179,7 @@ SIMPLE_JWT = {
     'ISSUER': None,
 
     'AUTH_HEADER_TYPES': ('Bearer',),
-    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION', # 헤더 네임!!
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
 

@@ -25,23 +25,14 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path("user/register/", RegisterAPIView.as_view()), # 1
-    # path("user/login/", LoginAPIView.as_view()), # 1
-    # path("user/register/", Register.as_view()), # 2
-    # path("user/login/", Login.as_view()), # 2
-    # path('user/mypage/', MyPageView.as_view()), # 2
-    # path("user/update/", UpdateAPIView.as_view()), # 1
-    # path("user/auth/refresh/", TokenRefreshView.as_view()), # 0
     path("user/register/", RegisterView.as_view()),
     path("user/login/", LoginView.as_view()),
     path("user/logout/", LogoutView.as_view()),
     path("user/view/", UserView.as_view()),
+    # path("user/view/<int:pk>", UserView.as_view()),
     path('community/create/', CommunityCreate.as_view(), name='community-create'),
     path('community/<int:pk>', CommunityDetail.as_view(), name='community-detail'),
     path('community/', CommunityList.as_view(), name='community-list'),
     path('comment/create/<int:pk>', CommentCreate.as_view(), name='comment-create'),
     path('comment/<int:pk>', CommentDetail.as_view(), name='comment-detail'),
-    # path('login/', login, name='login'),
-    # path('login/', AuthAPIView.as_view()),
-    # path('list/', ListUsers.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
