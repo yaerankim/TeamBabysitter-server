@@ -75,6 +75,19 @@ class LoginView(APIView):
 class LogoutView(APIView):
     # permission_classes = [IsAuthenticated]
     def post(self,req):
+        # 로그아웃도 로그인했던 유저만 가능하도록 아래 코드 추가
+        token = req.COOKIES.get('jwt')
+
+        if not token :
+            raise AuthenticationFailed('UnAuthenticated!')
+
+        try :
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+
+        except jwt.ExpiredSignatureError:
+            raise AuthenticationFailed('UnAuthenticated!')
+
+        # 기존 코드
         res = Response()
         res.delete_cookie('jwt')
         res.data = {
