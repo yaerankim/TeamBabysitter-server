@@ -32,6 +32,19 @@ class CommunityDetail(generics.RetrieveUpdateDestroyAPIView):
     # permission_classes = [IsAuthenticatedOrReadOnly]
     permission_classes = [AllowAny]
 
+    # def get(self, request, pk):
+    #     serializer = CommunityDetailSerializer(data=request.data)
+
+    #     if serializer.is_valid():
+    #         community = community.objects.get(
+    #                     # user_id = request.user.id,
+    #                     # community_id = self.kwargs['pk'],
+    #                     community_id = pk,
+    #                     row_count = request.data['row_count'],
+    #         )
+    #         return Response(serializer.data, status=status.HTTP_200_OK)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class CommunityList(generics.ListAPIView):
     queryset= Community.objects.all()
     serializer_class = CommunityListSerializer

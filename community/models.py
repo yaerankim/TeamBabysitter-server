@@ -44,6 +44,21 @@ class Community(models.Model):
 				verbose_name = 'row count',
 				default      = 0, 
 			)
+	# 추천글 선별 위한 좋아요 개수 담을 변수
+	like_count = models.IntegerField(
+			verbose_name = 'like count',
+			default      = 0, 
+		)
+	comments_count = models.IntegerField(
+		verbose_name = 'comments count',
+		default      = 0, 
+	)
+	# 자유토크(free), 질문답변(question) 카테고리
+	category = models.CharField(
+		verbose_name = 'category',
+		default      = 'free', # 게시글 업로드 시 지정하지 않으면 자유토크로
+		max_length = 10,
+	)
 
 	class Meta:
 		db_table = 'communities'
