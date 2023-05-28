@@ -38,6 +38,7 @@ class CommunityDetailSerializer(serializers.ModelSerializer):
     # writer = serializers.ReadOnlyField(source='user.nickname')
     comments = serializers.SerializerMethodField()
     row_count = serializers.SerializerMethodField()
+    comments_count = serializers.SerializerMethodField() # 추가
 
     def get_comments(self, obj):
         comments = [{
