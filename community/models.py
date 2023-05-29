@@ -1,4 +1,5 @@
 from django.db import models
+from user_api.models import User
 
 class Community(models.Model):
 	POST_STATUSES = (
@@ -6,12 +7,13 @@ class Community(models.Model):
 			('D', 'Deactivated')
 			)
 
-	# User 제대로 작동 안 하니 일단 주석 처리
-	# user    = models.ForeignKey(
-	#             'user.User',
-	#             related_name = 'users',
-	#             on_delete    = models.CASCADE,
-	#         )
+	user    = models.ForeignKey(
+	            # 'user_api.User',
+	            # related_name = 'users',
+				User,
+				default      = 1,
+	            on_delete    = models.CASCADE,
+	        )
 	status  = models.CharField(
 				verbose_name = 'status',
 				choices      = POST_STATUSES,
@@ -65,12 +67,13 @@ class Community(models.Model):
 
 # 댓글 관련 모델
 class Comment(models.Model):
-	# User 제대로 작동 안 하니 일단 주석 처리
-	# user       = models.ForeignKey(
-	#             'user.User',
-	#             verbose_name = 'users',
-	#             on_delete    = models.CASCADE
-	#         )
+	user       = models.ForeignKey(
+	            # 'user_api.User',
+	            # verbose_name = 'users',
+				User,
+				default      = 1,
+	            on_delete    = models.CASCADE
+	        )
 	# 1(community):N(comment) 관계니까 Foreign key로 설정
 	community  = models.ForeignKey(
 				# 'post.Post',

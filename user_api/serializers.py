@@ -20,10 +20,8 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
 # 로그인, 로그아웃용 시리얼라이저
 class UserSerializer(serializers.ModelSerializer): # serializers.HyperlinkedModelSerializer
-    user_image = HybridImageField(use_url=True) # default image를 file로서 인정해줌
-    # 임의로 추가 # 'UserSerializer' object has no attribute 'get_cookie' 에러 발생
-    # cookie = serializers.SerializerMethodField()
-    
+    user_image = serializers.ImageField(use_url=True)
+
     class Meta:
         model = User
         # id, cookie 추가
@@ -51,6 +49,8 @@ class UserSerializer(serializers.ModelSerializer): # serializers.HyperlinkedMode
 
 # 계정 확인용 시리얼라이저
 class UserDetailSerializer(serializers.ModelSerializer):
+    user_image = serializers.ImageField(use_url=True) # 이미지의 url을 직렬화하여 반환하도록 함
+
     class Meta:
         model = User
         fields = ['id', 'email', 'user_image', 'nickname', 'baby_birthday', 'baby_gender'] # id 추가

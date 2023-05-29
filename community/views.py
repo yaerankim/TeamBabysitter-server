@@ -16,7 +16,7 @@ class CommunityCreate(generics.CreateAPIView):
 
         if serializer.is_valid():
             community = Community.objects.create(
-                    # user_id = request.user.id,
+                    # user_id = request.user, # request.user.id,
                     title = request.data['title'],
                     content = request.data['content'],
                     view_count = 0,
@@ -61,7 +61,7 @@ class CommentCreate(generics.CreateAPIView):
 
         if serializer.is_valid():
             comment = Comment.objects.create(
-                        # user_id = request.user.id,
+                        # user_id = request.user,
                         community_id = self.kwargs['pk'], # 필드명 수정
                         content = request.data['content']
             )

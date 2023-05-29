@@ -96,11 +96,11 @@ class LogoutView(APIView):
         return res
 
 # 로그인 유지(로그인 여부 확인)
-class UserView(APIView): # generics.RetrieveUpdateDestroyAPIView
+class UserView(generics.RetrieveUpdateDestroyAPIView): # APIView # 수정(@)
     # permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserDetailSerializer
-    # def get(self,req,pk): # pk 추가 # 안드로이드에서 로그인 유지가 안돼서 직접 pk값 지정해서 수정하는 코드였을 때
+
     def get(self,req):
         token = req.COOKIES.get('jwt')
 
@@ -121,7 +121,7 @@ class UserView(APIView): # generics.RetrieveUpdateDestroyAPIView
 
     # account 수정 시
     # def put(self,req,pk): # pk 추가
-    def put(self,req):
+    def patch(self,req): # 수정(@)
         token = req.COOKIES.get('jwt')
 
         if not token :
