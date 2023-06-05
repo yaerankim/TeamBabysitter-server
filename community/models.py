@@ -41,7 +41,6 @@ class Community(models.Model):
 				verbose_name = 'updated at',
 				auto_now     = True
 			)
-	# front에서 게시물 전체 list 개수 다 보여주고자 할 때 필요해서 추가 정의
 	row_count = models.IntegerField(
 				verbose_name = 'row count',
 				default      = 0, 
@@ -58,7 +57,7 @@ class Community(models.Model):
 	# 자유토크(free), 질문답변(question) 카테고리
 	category = models.CharField(
 		verbose_name = 'category',
-		default      = 'free', # 게시글 업로드 시 지정하지 않으면 자유토크로
+		default      = 'free',
 		max_length = 10,
 	)
 
@@ -74,11 +73,10 @@ class Comment(models.Model):
 				default      = 1,
 	            on_delete    = models.CASCADE
 	        )
-	# 1(community):N(comment) 관계니까 Foreign key로 설정
 	community  = models.ForeignKey(
 				# 'post.Post',
 				# verbose_name = 'posts',
-				Community, # Community 이미 정의되어 있으니 그냥 바로 객체 가져오도록 수정
+				Community,
 				on_delete    = models.CASCADE
 			)
 	content    = models.CharField(

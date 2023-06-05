@@ -1,17 +1,21 @@
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
+from rest_framework.exceptions import AuthenticationFailed
+import jwt
 
 from .serializers import CommunityCreateSerializer, CommunityDetailSerializer, CommunityListSerializer, CommentSerializer
 from community.models import Community, Comment
+from django.conf import settings
 
 class CommunityCreate(generics.CreateAPIView):
     queryset = Community.objects.all()
     serializer_class = CommunityCreateSerializer
     # permission_classes = [IsAuthenticated]
-    permission_classes = [AllowAny] # 일단 지금은 AllowAny로 지정
+    permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
+
         serializer = CommunityCreateSerializer(data=request.data)
 
         if serializer.is_valid():
@@ -32,19 +36,6 @@ class CommunityDetail(generics.RetrieveUpdateDestroyAPIView):
     # permission_classes = [IsAuthenticatedOrReadOnly]
     permission_classes = [AllowAny]
 
-    # def get(self, request, pk):
-    #     serializer = CommunityDetailSerializer(data=request.data)
-
-    #     if serializer.is_valid():
-    #         community = community.objects.get(
-    #                     # user_id = request.user.id,
-    #                     # community_id = self.kwargs['pk'],
-    #                     community_id = pk,
-    #                     row_count = request.data['row_count'],
-    #         )
-    #         return Response(serializer.data, status=status.HTTP_200_OK)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 class CommunityList(generics.ListAPIView):
     queryset= Community.objects.all()
     serializer_class = CommunityListSerializer
@@ -54,7 +45,7 @@ class CommentCreate(generics.CreateAPIView):
     queryset= Comment.objects.all()
     serializer_class = CommentSerializer
     # permission_classes = [IsAuthenticatedOrReadOnly]
-    permission_classes = [AllowAny] # 일단 지금은 AllowAny로 지정
+    permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
         serializer = CommentSerializer(data=request.data)
@@ -72,4 +63,4 @@ class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     # permission_classes = [IsAuthenticatedOrReadOnly]
-    permission_classes = [AllowAny] # 일단 지금은 AllowAny로 지정
+    permission_classes = [AllowAny]

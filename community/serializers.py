@@ -39,6 +39,7 @@ class CommunityDetailSerializer(serializers.ModelSerializer):
     comments = serializers.SerializerMethodField()
     row_count = serializers.SerializerMethodField()
     comments_count = serializers.SerializerMethodField() # 추가
+    all_comments_count = serializers.SerializerMethodField() # 추가
 
     def get_comments(self, obj):
         comments = [{
@@ -54,6 +55,16 @@ class CommunityDetailSerializer(serializers.ModelSerializer):
         row_count = len(community)
         return row_count
     
+    # 모든 comment 총 개수
+    def get_all_comments_count(self, obj):
+        # community_id -> view에서 comment 등록 관련해서 사용되는 필드
+        comments = Comment.objects.all()
+        # comments_count = {
+        #         'comments_count':len(comments)
+        # }
+        all_comments_count = len(comments)
+        return all_comments_count
+
     def get_comments_count(self, obj):
         # community_id -> view에서 comment 등록 관련해서 사용되는 필드
         comments = Comment.objects.filter(community_id=obj.id)
@@ -67,7 +78,7 @@ class CommunityDetailSerializer(serializers.ModelSerializer):
         model = Community
         # 해당 필드 순으로 key-value 형태로 response 값 받을 수 있음
         # fields = ['id', 'title', 'writer', 'content', 'view_count', 'updated_at', 'comments']
-        fields = ['id', 'writer', 'title', 'content', 'view_count', 'updated_at', 'comments_count', 'comments', 'row_count', 'like_count', 'category']
+        fields = ['id', 'writer', 'title', 'content', 'view_count', 'updated_at', 'all_comments_count', 'comments_count', 'comments', 'row_count', 'like_count', 'category']
 
 class CommentSerializer(serializers.ModelSerializer):
     writer = serializers.ReadOnlyField(source='user.nickname')
@@ -75,4 +86,5 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         # fields = ['id', 'writer', 'content', 'created_at', 'updated_at']
-        fields = ['community_id', 'id', 'writer', 'content', 'created_at', 'updated_at']
+        # fields = ['community_id', 'id', 'writer', 'content', 'created_at', 'updated_at']
+        fields = ['community_id', 'id', 'writer', 'content'] # 안드로이드로 comment_get할 경우 date 타입 문제 때문에 주석 처리

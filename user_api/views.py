@@ -62,12 +62,9 @@ class LoginView(APIView):
         token = jwt.encode(payload, settings.SECRET_KEY, algorithm="HS256").decode("utf-8")
 
         res = Response()
-        # httponly=True -> 웹서버에서만 쿠키에 접근할 수 있도록 지정한 것
-        # 형태 -> HttpResponse.set_cookie(key, value='', max_age=None, expires=None, path='/', domain=None, secure=False, httponly=False, samesite=None)
         res.set_cookie(key='jwt', value=token, httponly=True)
         res.data = {
             'jwt' : token
-            # 'type(jwt)' : str(type(jwt)) # <class 'module'>
         }
         return res
 
@@ -75,7 +72,6 @@ class LoginView(APIView):
 class LogoutView(APIView):
     # permission_classes = [IsAuthenticated]
     def post(self,req):
-        # 로그아웃도 로그인했던 유저만 가능하도록 아래 코드 추가
         token = req.COOKIES.get('jwt')
 
         if not token :
@@ -96,7 +92,7 @@ class LogoutView(APIView):
         return res
 
 # 로그인 유지(로그인 여부 확인)
-class UserView(generics.RetrieveUpdateDestroyAPIView): # APIView # 수정(@)
+class UserView(APIView):
     # permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserDetailSerializer
@@ -113,15 +109,14 @@ class UserView(generics.RetrieveUpdateDestroyAPIView): # APIView # 수정(@)
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('UnAuthenticated!')
 
-        user = User.objects.filter(id=payload['id']).first()
-        # user = User.objects.get(pk=pk)
+        user = User.objects.get(id=payload['id'])
+        
         serializer = UserDetailSerializer(user)
 
         return Response(serializer.data)
 
     # account 수정 시
-    # def put(self,req,pk): # pk 추가
-    def patch(self,req): # 수정(@)
+    def put(self,req): # pk 추가
         token = req.COOKIES.get('jwt')
 
         if not token :
@@ -133,17 +128,12 @@ class UserView(generics.RetrieveUpdateDestroyAPIView): # APIView # 수정(@)
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('UnAuthenticated!')
 
-        user = User.objects.filter(id=payload['id']).first()
-        # user = User.objects.get(pk=pk)
-        # data=req.data를 추가하여 serializer의 update() 호출
-        # partial=True로 설정하여 put 중에서도 일부만 수정해도 문제 없도록 설정
-        # serializer = UserSerializer(user, data=req.data, partial=True)
+        user = User.objects.get(id=payload['id'])
         serializer = UserDetailSerializer(user, data=req.data, partial=True)
 
         if serializer.is_valid():
-            serializer.save() # 데이터 저장
+            serializer.save()
 
             return Response(serializer.data)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        

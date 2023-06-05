@@ -35,4 +35,5 @@ urlpatterns = [
     path('community/', CommunityList.as_view(), name='community-list'),
     path('comment/create/<int:pk>', CommentCreate.as_view(), name='comment-create'),
     path('comment/<int:pk>', CommentDetail.as_view(), name='comment-detail'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

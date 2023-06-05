@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3qq)7lkvq8%^h8--vt=ilza8cmzm#33$amsz78r)6-trnya-qg'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,13 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders', # 추가
-    "user_api", # 추가
-    "rest_framework", # 추가
-    "rest_framework_simplejwt", # 추가
-    # "firebase_authentication", # 추가
-    'community', # 추가
-    'map', # 추가
+    'corsheaders',
+    "user_api",
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "community",
 ]
 
 MIDDLEWARE = [
@@ -56,24 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'firebase_authentication.authentication.FirebaseAuthMiddleware',
     'corsheaders.middleware.CorsMiddleware', # 추가
 ]
-
-# 500 error 발생
-# CORS_ORIGIN_ALLOW_ALL = False # 지정한 도메인만 허용
-
-# CORS_ORIGIN_WHITELIST = [
-#     "https://127.0.0.1:8000", # 허용할 도메인 추가
-# ]
-
-# CORS_ALLOW_METHODS = [
-#     'GET',  # 허용할 HTTP 메서드 추가
-#     'POST',
-#     'PUT',
-#     'PATCH',
-#     'DELETE',
-# ]
 
 ROOT_URLCONF = 'project.urls'
 
@@ -148,7 +130,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-FIREBASE_PATH = os.path.join(BASE_DIR, 'project/keyfile.json')
+# FIREBASE_PATH = os.path.join(BASE_DIR, 'project/keyfile.json')
 
 AUTH_USER_MODEL = 'user_api.User'
 
@@ -157,7 +139,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'firebase_authentication.authentication.FirebaseAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
@@ -179,7 +160,7 @@ SIMPLE_JWT = {
     'ISSUER': None,
 
     'AUTH_HEADER_TYPES': ('Bearer',),
-    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION', # 헤더 네임!!
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
 
